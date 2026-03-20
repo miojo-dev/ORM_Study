@@ -1,38 +1,40 @@
 from django.contrib import admin
-
+from unfold.admin import ModelAdmin, TabularInline
 from .models import *
 
 @admin.register(Carro)
-class CarroAdmin(admin.ModelAdmin):
+class CarroAdmin(ModelAdmin):
     list_display = ('placa', 'modelo')
     search_fields = ('placa', 'modelo')
 
-class ContatoInline(admin.TabularInline):
+class ContatoInline(TabularInline):
     model = Contato
     extra = 0
+    tab = True
 
-class ClienteCarroInline(admin.TabularInline):
+class ClienteCarroInline(TabularInline):
     model = ClienteCarro
     extra = 0
+    tab = True
 
 @admin.register(Cliente)
-class ClienteAdmin(admin.ModelAdmin):
+class ClienteAdmin(ModelAdmin):
     list_display = ('nome', 'saldo')
     search_fields = ('nome',)
     inlines = [ContatoInline, ClienteCarroInline]
 
 @admin.register(Tipo)
-class TipoAdmin(admin.ModelAdmin):
+class TipoAdmin(ModelAdmin):
     list_display = ('descricao', 'valor')
     search_fields = ('descricao',)
 
 @admin.register(Vaga)
-class VagaAdmin(admin.ModelAdmin):
+class VagaAdmin(ModelAdmin):
     list_display = ('numero', 'tipo')
     search_fields = ('numero',)
 
 @admin.register(Estacionamento)
-class EstacionamentoAdmin(admin.ModelAdmin):
+class EstacionamentoAdmin(ModelAdmin):
     list_display = ('cliente_carro', 'vaga', 'entrada', 'saida')
     list_filter = ('cliente_carro', 'vaga')
     ordering = ('-entrada',)

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -120,3 +122,64 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+UNFOLD = {
+    "SITE_TITLE": "Estacionamento",
+    "SITE_HEADER": "Estacionamento",
+    "SITE_SUBHEADER": "Vagas",
+    "SITE_SYMBOL": "speed",
+    "SIDEBAR": {
+        "show_search": False,
+        "show_all_applications": False,
+        "navigation": [
+            {
+                "title": "Operação",
+                "separator": True,
+                "collapsible": True,
+                "icon": "table",
+                "items": [
+                    {
+                        "title": "Estacionamento",
+                        "icon": "garage_check",
+                        "link": reverse_lazy("admin:app_estacionamento_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Cadastro",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": "Cliente",
+                        "icon": "person",
+                        "link": reverse_lazy("admin:app_cliente_changelist"),
+                    },
+                    {
+                        "title": "Carro",
+                        "icon": "garage",
+                        "link": reverse_lazy("admin:app_carro_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Tabelas",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": "Vaga",
+                        "icon": "place_item",
+                        "link": reverse_lazy("admin:app_vaga_changelist"),
+                    },
+                    {
+                        "title": "Tipo",
+                        "icon": "list",
+                        "link": reverse_lazy("admin:app_tipo_changelist"),
+                    },
+                ],
+            },
+        ],
+
+    },
+}
