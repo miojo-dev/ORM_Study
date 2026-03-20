@@ -25,6 +25,10 @@ class Cliente(models.Model):
         return self.nome
 
 
+class ClienteCarroManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(ativo=True)
+
 class ClienteCarro(models.Model):
     cliente = models.ForeignKey(Cliente, models.DO_NOTHING)
     carro = models.ForeignKey(Carro, models.DO_NOTHING)
@@ -37,6 +41,12 @@ class ClienteCarro(models.Model):
 
     def __str__(self):
         return f"{self.carro} ({self.cliente})"
+
+class ClienteCarroAtivo(ClienteCarro):
+    objects = ClienteCarroManager()
+
+    class meta:
+        proxy = True
 
 
 class Contato(models.Model):
@@ -83,7 +93,7 @@ class Vaga(models.Model):
 
 
 class Estacionamento(models.Model):
-    cliente_carro = models.ForeignKey(ClienteCarro, models.DO_NOTHING)
+    cliente_carro = models.ForeignKey(ClienteCarroAtivo, models.DO_NOTHING)
     vaga = models.ForeignKey(Vaga, models.DO_NOTHING)
     entrada = models.DateTimeField()
     saida = models.DateTimeField()
