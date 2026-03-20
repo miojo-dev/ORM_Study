@@ -1,6 +1,6 @@
 # ORM_Study
 
-this is a study for databases and ORMs make using Python 3.23 and the Django framework
+this is a study for databases and ORMs make using Python 3.13 and the Django framework
 
 ---
 
